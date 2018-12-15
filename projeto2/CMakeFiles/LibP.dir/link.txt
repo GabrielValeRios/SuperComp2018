@@ -1,0 +1,2 @@
+/usr/bin/ar qc libLibP.a  CMakeFiles/LibP.dir/crawler_par.cpp.o CMakeFiles/LibP.dir/produto.cpp.o
+/usr/bin/ranlib libLibP.a

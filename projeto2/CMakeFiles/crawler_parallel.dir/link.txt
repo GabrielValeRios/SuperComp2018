@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/crawler_parallel.dir/mainP.cpp.o CMakeFiles/crawler_parallel.dir/crawler_par.cpp.o CMakeFiles/crawler_parallel.dir/produto.cpp.o  -o crawler_parallel -Wl,-rpath,/home/gabriel/Documents/insper/7semestre/supecomp/superComp2018/projeto2/lib lib/libcpr.a -lboost_regex lib/libcurl.so -ldl -lpthread -lssl -lcrypto -lz 

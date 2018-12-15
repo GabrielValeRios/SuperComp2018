@@ -1,0 +1,2 @@
+/usr/bin/ar qc libLibS.a  CMakeFiles/LibS.dir/crawler_seq.cpp.o CMakeFiles/LibS.dir/produto.cpp.o
+/usr/bin/ranlib libLibS.a

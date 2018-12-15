@@ -1,0 +1,1283 @@
+	.file	"funcs.cpp"
+	.text
+	.p2align 4,,15
+	.globl	_Z10inner_prodPdS_m
+	.type	_Z10inner_prodPdS_m, @function
+_Z10inner_prodPdS_m:
+.LFB3201:
+	.cfi_startproc
+	testq	%rdx, %rdx
+	je	.L4
+	pxor	%xmm2, %xmm2
+	salq	$3, %rdx
+	xorl	%eax, %eax
+	pxor	%xmm0, %xmm0
+	.p2align 4,,10
+	.p2align 3
+.L3:
+	movsd	(%rdi,%rax), %xmm1
+	mulsd	(%rsi,%rax), %xmm1
+	addq	$8, %rax
+	cmpq	%rax, %rdx
+	addsd	%xmm1, %xmm0
+	jne	.L3
+	ucomisd	%xmm0, %xmm2
+	sqrtsd	%xmm0, %xmm1
+	ja	.L11
+	movapd	%xmm1, %xmm0
+	ret
+	.p2align 4,,10
+	.p2align 3
+.L4:
+	pxor	%xmm1, %xmm1
+	movapd	%xmm1, %xmm0
+	ret
+.L11:
+	subq	$24, %rsp
+	.cfi_def_cfa_offset 32
+	movsd	%xmm1, 8(%rsp)
+	call	sqrt@PLT
+	movsd	8(%rsp), %xmm1
+	addq	$24, %rsp
+	.cfi_def_cfa_offset 8
+	movapd	%xmm1, %xmm0
+	ret
+	.cfi_endproc
+.LFE3201:
+	.size	_Z10inner_prodPdS_m, .-_Z10inner_prodPdS_m
+	.p2align 4,,15
+	.globl	_Z12sqrt_elementPdm
+	.type	_Z12sqrt_elementPdm, @function
+_Z12sqrt_elementPdm:
+.LFB3203:
+	.cfi_startproc
+	testq	%rsi, %rsi
+	je	.L21
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	pxor	%xmm2, %xmm2
+	leaq	(%rdi,%rsi,8), %rbp
+	subq	$32, %rsp
+	.cfi_def_cfa_offset 48
+	.p2align 4,,10
+	.p2align 3
+.L15:
+	movsd	(%rdi), %xmm0
+	ucomisd	%xmm0, %xmm2
+	sqrtsd	%xmm0, %xmm1
+	ja	.L24
+.L14:
+	movsd	%xmm1, (%rdi)
+	addq	$8, %rdi
+	cmpq	%rdi, %rbp
+	jne	.L15
+	addq	$32, %rsp
+	.cfi_def_cfa_offset 16
+	popq	%rbp
+	.cfi_def_cfa_offset 8
+	ret
+	.p2align 4,,10
+	.p2align 3
+.L21:
+	.cfi_restore 6
+	rep ret
+.L24:
+	.cfi_def_cfa_offset 48
+	.cfi_offset 6, -16
+	movsd	%xmm2, 24(%rsp)
+	movq	%rdi, 16(%rsp)
+	movsd	%xmm1, 8(%rsp)
+	call	sqrt@PLT
+	movsd	24(%rsp), %xmm2
+	movq	16(%rsp), %rdi
+	movsd	8(%rsp), %xmm1
+	jmp	.L14
+	.cfi_endproc
+.LFE3203:
+	.size	_Z12sqrt_elementPdm, .-_Z12sqrt_elementPdm
+	.p2align 4,,15
+	.globl	_Z11exp_elementPdm
+	.type	_Z11exp_elementPdm, @function
+_Z11exp_elementPdm:
+.LFB3204:
+	.cfi_startproc
+	testq	%rsi, %rsi
+	je	.L33
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	pushq	%rbx
+	.cfi_def_cfa_offset 24
+	.cfi_offset 3, -24
+	leaq	(%rdi,%rsi,8), %rbp
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 32
+	.p2align 4,,10
+	.p2align 3
+.L27:
+	movsd	(%rbx), %xmm0
+	addq	$8, %rbx
+	call	exp@PLT
+	movsd	%xmm0, -8(%rbx)
+	cmpq	%rbx, %rbp
+	jne	.L27
+	addq	$8, %rsp
+	.cfi_def_cfa_offset 24
+	popq	%rbx
+	.cfi_def_cfa_offset 16
+	popq	%rbp
+	.cfi_def_cfa_offset 8
+	ret
+	.p2align 4,,10
+	.p2align 3
+.L33:
+	.cfi_restore 3
+	.cfi_restore 6
+	rep ret
+	.cfi_endproc
+.LFE3204:
+	.size	_Z11exp_elementPdm, .-_Z11exp_elementPdm
+	.p2align 4,,15
+	.globl	_Z5gaussPdS_m
+	.type	_Z5gaussPdS_m, @function
+_Z5gaussPdS_m:
+.LFB3206:
+	.cfi_startproc
+	testq	%rdx, %rdx
+	je	.L44
+	pushq	%r12
+	.cfi_def_cfa_offset 16
+	.cfi_offset 12, -16
+	leaq	(%rdi,%rdx,8), %r12
+	pushq	%rbp
+	.cfi_def_cfa_offset 24
+	.cfi_offset 6, -24
+	movq	%rsi, %rbp
+	pushq	%rbx
+	.cfi_def_cfa_offset 32
+	.cfi_offset 3, -32
+	movq	%rdi, %rbx
+	.p2align 4,,10
+	.p2align 3
+.L38:
+	movsd	(%rbx), %xmm1
+	addq	$8, %rbx
+	addq	$8, %rbp
+	movapd	%xmm1, %xmm0
+	xorpd	.LC1(%rip), %xmm0
+	mulsd	%xmm1, %xmm0
+	mulsd	.LC2(%rip), %xmm0
+	call	exp@PLT
+	mulsd	.LC3(%rip), %xmm0
+	movsd	%xmm0, -8(%rbp)
+	cmpq	%r12, %rbx
+	jne	.L38
+	popq	%rbx
+	.cfi_def_cfa_offset 24
+	popq	%rbp
+	.cfi_def_cfa_offset 16
+	popq	%r12
+	.cfi_def_cfa_offset 8
+	ret
+	.p2align 4,,10
+	.p2align 3
+.L44:
+	.cfi_restore 3
+	.cfi_restore 6
+	.cfi_restore 12
+	rep ret
+	.cfi_endproc
+.LFE3206:
+	.size	_Z5gaussPdS_m, .-_Z5gaussPdS_m
+	.p2align 4,,15
+	.globl	_Z11log_elementPdm
+	.type	_Z11log_elementPdm, @function
+_Z11log_elementPdm:
+.LFB3205:
+	.cfi_startproc
+	testq	%rsi, %rsi
+	je	.L55
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	pushq	%rbx
+	.cfi_def_cfa_offset 24
+	.cfi_offset 3, -24
+	leaq	(%rdi,%rsi,8), %rbp
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 32
+	.p2align 4,,10
+	.p2align 3
+.L49:
+	movsd	(%rbx), %xmm0
+	addq	$8, %rbx
+	call	log@PLT
+	movsd	%xmm0, -8(%rbx)
+	cmpq	%rbx, %rbp
+	jne	.L49
+	addq	$8, %rsp
+	.cfi_def_cfa_offset 24
+	popq	%rbx
+	.cfi_def_cfa_offset 16
+	popq	%rbp
+	.cfi_def_cfa_offset 8
+	ret
+	.p2align 4,,10
+	.p2align 3
+.L55:
+	.cfi_restore 3
+	.cfi_restore 6
+	rep ret
+	.cfi_endproc
+.LFE3205:
+	.size	_Z11log_elementPdm, .-_Z11log_elementPdm
+	.p2align 4,,15
+	.globl	_Z12sum_positivePdm
+	.type	_Z12sum_positivePdm, @function
+_Z12sum_positivePdm:
+.LFB3202:
+	.cfi_startproc
+	testq	%rsi, %rsi
+	je	.L63
+	pxor	%xmm2, %xmm2
+	leaq	(%rdi,%rsi,8), %rax
+	pxor	%xmm0, %xmm0
+	.p2align 4,,10
+	.p2align 3
+.L62:
+	movsd	(%rdi), %xmm1
+	ucomisd	%xmm2, %xmm1
+	jbe	.L60
+	addsd	%xmm1, %xmm0
+.L60:
+	addq	$8, %rdi
+	cmpq	%rax, %rdi
+	jne	.L62
+	rep ret
+	.p2align 4,,10
+	.p2align 3
+.L63:
+	pxor	%xmm0, %xmm0
+	ret
+	.cfi_endproc
+.LFE3202:
+	.size	_Z12sum_positivePdm, .-_Z12sum_positivePdm
+	.section	.text._ZNSt24uniform_int_distributionIiEclISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEEEiRT_RKNS0_10param_typeE,"axG",@progbits,_ZNSt24uniform_int_distributionIiEclISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEEEiRT_RKNS0_10param_typeE,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZNSt24uniform_int_distributionIiEclISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEEEiRT_RKNS0_10param_typeE
+	.type	_ZNSt24uniform_int_distributionIiEclISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEEEiRT_RKNS0_10param_typeE, @function
+_ZNSt24uniform_int_distributionIiEclISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEEEiRT_RKNS0_10param_typeE:
+.LFB3628:
+	.cfi_startproc
+	pushq	%r15
+	.cfi_def_cfa_offset 16
+	.cfi_offset 15, -16
+	pushq	%r14
+	.cfi_def_cfa_offset 24
+	.cfi_offset 14, -24
+	pushq	%r13
+	.cfi_def_cfa_offset 32
+	.cfi_offset 13, -32
+	pushq	%r12
+	.cfi_def_cfa_offset 40
+	.cfi_offset 12, -40
+	pushq	%rbp
+	.cfi_def_cfa_offset 48
+	.cfi_offset 6, -48
+	pushq	%rbx
+	.cfi_def_cfa_offset 56
+	.cfi_offset 3, -56
+	movq	%rsi, %rbx
+	subq	$24, %rsp
+	.cfi_def_cfa_offset 80
+	movslq	4(%rdx), %r14
+	movq	%fs:40, %rax
+	movq	%rax, 8(%rsp)
+	xorl	%eax, %eax
+	movslq	(%rdx), %rax
+	subq	%rax, %r14
+	movq	%rax, %rsi
+	cmpq	$2147483644, %r14
+	ja	.L67
+	addq	$1, %r14
+	movl	$2147483645, %eax
+	xorl	%edx, %edx
+	divq	%r14
+	movq	(%rbx), %rdx
+	movabsq	$8589934597, %r8
+	imulq	%rax, %r14
+	movq	%rax, %r9
+	.p2align 4,,10
+	.p2align 3
+.L68:
+	imulq	$16807, %rdx, %rdi
+	movq	%rdi, %rax
+	movq	%rdi, %rcx
+	mulq	%r8
+	subq	%rdx, %rcx
+	shrq	%rcx
+	addq	%rcx, %rdx
+	shrq	$30, %rdx
+	movq	%rdx, %rcx
+	salq	$31, %rcx
+	subq	%rdx, %rcx
+	subq	%rcx, %rdi
+	leaq	-1(%rdi), %rax
+	movq	%rdi, %rdx
+	cmpq	%rax, %r14
+	jbe	.L68
+	xorl	%edx, %edx
+	movq	%rdi, (%rbx)
+	divq	%r9
+.L69:
+	addl	%esi, %eax
+	movq	8(%rsp), %rbx
+	xorq	%fs:40, %rbx
+	jne	.L82
+	addq	$24, %rsp
+	.cfi_remember_state
+	.cfi_def_cfa_offset 56
+	popq	%rbx
+	.cfi_def_cfa_offset 48
+	popq	%rbp
+	.cfi_def_cfa_offset 40
+	popq	%r12
+	.cfi_def_cfa_offset 32
+	popq	%r13
+	.cfi_def_cfa_offset 24
+	popq	%r14
+	.cfi_def_cfa_offset 16
+	popq	%r15
+	.cfi_def_cfa_offset 8
+	ret
+	.p2align 4,,10
+	.p2align 3
+.L67:
+	.cfi_restore_state
+	cmpq	$2147483645, %r14
+	jne	.L83
+	imulq	$16807, (%rbx), %rcx
+	movabsq	$8589934597, %rdx
+	movq	%rcx, %rax
+	mulq	%rdx
+	movq	%rcx, %rax
+	subq	%rdx, %rax
+	shrq	%rax
+	addq	%rdx, %rax
+	shrq	$30, %rax
+	movq	%rax, %rdx
+	salq	$31, %rdx
+	subq	%rax, %rdx
+	subq	%rdx, %rcx
+	movq	%rcx, %rax
+	movq	%rcx, (%rbx)
+	subq	$1, %rax
+	jmp	.L69
+	.p2align 4,,10
+	.p2align 3
+.L83:
+	movq	%rdx, %r15
+	movq	%r14, %rdx
+	movabsq	$-9223372028264841207, %rbp
+	shrq	%rdx
+	movq	%rdi, %r12
+	movq	%rsp, %r13
+	movq	%rdx, %rax
+	mulq	%rbp
+	shrq	$29, %rdx
+	movl	%edx, %ebp
+.L78:
+	movq	%r13, %rdx
+	movq	%rbx, %rsi
+	movq	%r12, %rdi
+	movl	$0, (%rsp)
+	movl	%ebp, 4(%rsp)
+	call	_ZNSt24uniform_int_distributionIiEclISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEEEiRT_RKNS0_10param_typeE
+	imulq	$16807, (%rbx), %rdi
+	movslq	%eax, %rsi
+	movabsq	$8589934597, %rax
+	mulq	%rdi
+	movq	%rdi, %rax
+	subq	%rdx, %rax
+	shrq	%rax
+	addq	%rdx, %rax
+	shrq	$30, %rax
+	movq	%rax, %rdx
+	salq	$31, %rdx
+	subq	%rax, %rdx
+	subq	%rdx, %rdi
+	movq	%rsi, %rdx
+	salq	$30, %rdx
+	movq	%rdi, %rax
+	movq	%rdi, (%rbx)
+	subq	%rsi, %rdx
+	subq	$1, %rax
+	addq	%rdx, %rdx
+	addq	%rdx, %rax
+	setc	%dl
+	cmpq	%rax, %r14
+	movzbl	%dl, %edx
+	jb	.L78
+	testq	%rdx, %rdx
+	jne	.L78
+	movl	(%r15), %esi
+	jmp	.L69
+.L82:
+	call	__stack_chk_fail@PLT
+	.cfi_endproc
+.LFE3628:
+	.size	_ZNSt24uniform_int_distributionIiEclISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEEEiRT_RKNS0_10param_typeE, .-_ZNSt24uniform_int_distributionIiEclISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEEEiRT_RKNS0_10param_typeE
+	.text
+	.p2align 4,,15
+	.globl	_Z9intRandomPdm
+	.type	_Z9intRandomPdm, @function
+_Z9intRandomPdm:
+.LFB3207:
+	.cfi_startproc
+	pushq	%r13
+	.cfi_def_cfa_offset 16
+	.cfi_offset 13, -16
+	pushq	%r12
+	.cfi_def_cfa_offset 24
+	.cfi_offset 12, -24
+	pushq	%rbp
+	.cfi_def_cfa_offset 32
+	.cfi_offset 6, -32
+	pushq	%rbx
+	.cfi_def_cfa_offset 40
+	.cfi_offset 3, -40
+	subq	$40, %rsp
+	.cfi_def_cfa_offset 80
+	movq	%fs:40, %rax
+	movq	%rax, 24(%rsp)
+	xorl	%eax, %eax
+	movabsq	$47244640246, %rax
+	testq	%rsi, %rsi
+	movq	$1, 8(%rsp)
+	movq	%rax, 16(%rsp)
+	je	.L84
+	leaq	(%rdi,%rsi,8), %r13
+	leaq	16(%rsp), %rbp
+	leaq	8(%rsp), %r12
+	movq	%rdi, %rbx
+	.p2align 4,,10
+	.p2align 3
+.L86:
+	movq	%rbp, %rdx
+	movq	%r12, %rsi
+	movq	%rbp, %rdi
+	call	_ZNSt24uniform_int_distributionIiEclISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEEEiRT_RKNS0_10param_typeE
+	pxor	%xmm0, %xmm0
+	addq	$8, %rbx
+	cvtsi2sd	%eax, %xmm0
+	movsd	%xmm0, -8(%rbx)
+	cmpq	%rbx, %r13
+	jne	.L86
+.L84:
+	movq	24(%rsp), %rax
+	xorq	%fs:40, %rax
+	jne	.L93
+	addq	$40, %rsp
+	.cfi_remember_state
+	.cfi_def_cfa_offset 40
+	popq	%rbx
+	.cfi_def_cfa_offset 32
+	popq	%rbp
+	.cfi_def_cfa_offset 24
+	popq	%r12
+	.cfi_def_cfa_offset 16
+	popq	%r13
+	.cfi_def_cfa_offset 8
+	ret
+.L93:
+	.cfi_restore_state
+	call	__stack_chk_fail@PLT
+	.cfi_endproc
+.LFE3207:
+	.size	_Z9intRandomPdm, .-_Z9intRandomPdm
+	.section	.rodata._Z10timeCalc_2IdEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE.str1.1,"aMS",@progbits,1
+.LC5:
+	.string	","
+	.section	.text._Z10timeCalc_2IdEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE,"axG",@progbits,_Z10timeCalc_2IdEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE,comdat
+	.p2align 4,,15
+	.weak	_Z10timeCalc_2IdEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE
+	.type	_Z10timeCalc_2IdEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE, @function
+_Z10timeCalc_2IdEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE:
+.LFB3211:
+	.cfi_startproc
+	pushq	%r15
+	.cfi_def_cfa_offset 16
+	.cfi_offset 15, -16
+	pushq	%r14
+	.cfi_def_cfa_offset 24
+	.cfi_offset 14, -24
+	pushq	%r13
+	.cfi_def_cfa_offset 32
+	.cfi_offset 13, -32
+	pushq	%r12
+	.cfi_def_cfa_offset 40
+	.cfi_offset 12, -40
+	pushq	%rbp
+	.cfi_def_cfa_offset 48
+	.cfi_offset 6, -48
+	pushq	%rbx
+	.cfi_def_cfa_offset 56
+	.cfi_offset 3, -56
+	subq	$56, %rsp
+	.cfi_def_cfa_offset 112
+	movq	%fs:40, %rax
+	movq	%rax, 40(%rsp)
+	xorl	%eax, %eax
+	cmpl	$100000000, %esi
+	movq	%rdx, 8(%rsp)
+	jg	.L94
+	movslq	%esi, %rbx
+	movabsq	$1152921504606846975, %rax
+	cmpq	%rax, %rbx
+	ja	.L96
+	leaq	39(%rsp), %rcx
+	movq	%rdi, %r13
+	movl	%esi, %ebp
+	leaq	0(,%rbx,8), %r15
+	movq	%rax, 24(%rsp)
+	movq	%rcx, 16(%rsp)
+	jmp	.L97
+	.p2align 4,,10
+	.p2align 3
+.L100:
+	addq	$10000000, %rbx
+	addq	$80000000, %r15
+	cmpq	24(%rsp), %rbx
+	ja	.L96
+.L97:
+	movq	%r15, %rdi
+	call	_Znam@PLT
+	movq	%rbx, %rsi
+	movq	%rax, %r14
+	movq	%rax, %rdi
+	call	_Z9intRandomPdm
+	call	_ZNSt6chrono3_V212system_clock3nowEv@PLT
+	movq	%rbx, %rdx
+	movq	%rax, %r12
+	movq	%r14, %rsi
+	movq	%r14, %rdi
+	call	*%r13
+	call	_ZNSt6chrono3_V212system_clock3nowEv@PLT
+	pxor	%xmm0, %xmm0
+	subq	%r12, %rax
+	movq	16(%rsp), %rsi
+	movq	8(%rsp), %rdi
+	movl	$1, %edx
+	movb	$10, 39(%rsp)
+	cvtsi2sdq	%rax, %xmm0
+	divsd	.LC4(%rip), %xmm0
+	movsd	%xmm0, (%rsp)
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	movl	%ebp, %esi
+	movq	%rax, %rdi
+	addl	$10000000, %ebp
+	call	_ZNSolsEi@PLT
+	leaq	.LC5(%rip), %rsi
+	movl	$1, %edx
+	movq	%rax, %rdi
+	movq	%rax, %r12
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	movsd	(%rsp), %xmm0
+	movq	%r12, %rdi
+	call	_ZNSo9_M_insertIdEERSoT_@PLT
+	cmpl	$100000000, %ebp
+	jle	.L100
+.L94:
+	movq	40(%rsp), %rax
+	xorq	%fs:40, %rax
+	jne	.L102
+	addq	$56, %rsp
+	.cfi_remember_state
+	.cfi_def_cfa_offset 56
+	popq	%rbx
+	.cfi_def_cfa_offset 48
+	popq	%rbp
+	.cfi_def_cfa_offset 40
+	popq	%r12
+	.cfi_def_cfa_offset 32
+	popq	%r13
+	.cfi_def_cfa_offset 24
+	popq	%r14
+	.cfi_def_cfa_offset 16
+	popq	%r15
+	.cfi_def_cfa_offset 8
+	ret
+.L96:
+	.cfi_restore_state
+	call	__cxa_throw_bad_array_new_length@PLT
+.L102:
+	call	__stack_chk_fail@PLT
+	.cfi_endproc
+.LFE3211:
+	.size	_Z10timeCalc_2IdEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE, .-_Z10timeCalc_2IdEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE
+	.section	.text._Z10timeCalc_1IvEDaPFT_PdmEmRSt14basic_ofstreamIcSt11char_traitsIcEE,"axG",@progbits,_Z10timeCalc_1IvEDaPFT_PdmEmRSt14basic_ofstreamIcSt11char_traitsIcEE,comdat
+	.p2align 4,,15
+	.weak	_Z10timeCalc_1IvEDaPFT_PdmEmRSt14basic_ofstreamIcSt11char_traitsIcEE
+	.type	_Z10timeCalc_1IvEDaPFT_PdmEmRSt14basic_ofstreamIcSt11char_traitsIcEE, @function
+_Z10timeCalc_1IvEDaPFT_PdmEmRSt14basic_ofstreamIcSt11char_traitsIcEE:
+.LFB3221:
+	.cfi_startproc
+	pushq	%r15
+	.cfi_def_cfa_offset 16
+	.cfi_offset 15, -16
+	pushq	%r14
+	.cfi_def_cfa_offset 24
+	.cfi_offset 14, -24
+	pushq	%r13
+	.cfi_def_cfa_offset 32
+	.cfi_offset 13, -32
+	pushq	%r12
+	.cfi_def_cfa_offset 40
+	.cfi_offset 12, -40
+	pushq	%rbp
+	.cfi_def_cfa_offset 48
+	.cfi_offset 6, -48
+	pushq	%rbx
+	.cfi_def_cfa_offset 56
+	.cfi_offset 3, -56
+	subq	$56, %rsp
+	.cfi_def_cfa_offset 112
+	movq	%fs:40, %rax
+	movq	%rax, 40(%rsp)
+	xorl	%eax, %eax
+	cmpl	$100000000, %esi
+	movq	%rdx, 8(%rsp)
+	jg	.L103
+	movslq	%esi, %rbx
+	movabsq	$1152921504606846975, %rax
+	cmpq	%rax, %rbx
+	ja	.L105
+	leaq	39(%rsp), %rcx
+	movq	%rdi, %r13
+	movl	%esi, %ebp
+	leaq	0(,%rbx,8), %r15
+	movq	%rax, 24(%rsp)
+	movq	%rcx, 16(%rsp)
+	jmp	.L106
+	.p2align 4,,10
+	.p2align 3
+.L109:
+	addq	$10000000, %rbx
+	addq	$80000000, %r15
+	cmpq	24(%rsp), %rbx
+	ja	.L105
+.L106:
+	movq	%r15, %rdi
+	call	_Znam@PLT
+	movq	%rbx, %rsi
+	movq	%rax, %r14
+	movq	%rax, %rdi
+	call	_Z9intRandomPdm
+	call	_ZNSt6chrono3_V212system_clock3nowEv@PLT
+	movq	%rbx, %rsi
+	movq	%rax, %r12
+	movq	%r14, %rdi
+	call	*%r13
+	call	_ZNSt6chrono3_V212system_clock3nowEv@PLT
+	pxor	%xmm0, %xmm0
+	subq	%r12, %rax
+	movq	16(%rsp), %rsi
+	movq	8(%rsp), %rdi
+	movl	$1, %edx
+	movb	$10, 39(%rsp)
+	cvtsi2sdq	%rax, %xmm0
+	divsd	.LC4(%rip), %xmm0
+	movsd	%xmm0, (%rsp)
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	movl	%ebp, %esi
+	movq	%rax, %rdi
+	addl	$10000000, %ebp
+	call	_ZNSolsEi@PLT
+	leaq	.LC5(%rip), %rsi
+	movl	$1, %edx
+	movq	%rax, %rdi
+	movq	%rax, %r12
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	movsd	(%rsp), %xmm0
+	movq	%r12, %rdi
+	call	_ZNSo9_M_insertIdEERSoT_@PLT
+	cmpl	$100000000, %ebp
+	jle	.L109
+.L103:
+	movq	40(%rsp), %rax
+	xorq	%fs:40, %rax
+	jne	.L111
+	addq	$56, %rsp
+	.cfi_remember_state
+	.cfi_def_cfa_offset 56
+	popq	%rbx
+	.cfi_def_cfa_offset 48
+	popq	%rbp
+	.cfi_def_cfa_offset 40
+	popq	%r12
+	.cfi_def_cfa_offset 32
+	popq	%r13
+	.cfi_def_cfa_offset 24
+	popq	%r14
+	.cfi_def_cfa_offset 16
+	popq	%r15
+	.cfi_def_cfa_offset 8
+	ret
+.L105:
+	.cfi_restore_state
+	call	__cxa_throw_bad_array_new_length@PLT
+.L111:
+	call	__stack_chk_fail@PLT
+	.cfi_endproc
+.LFE3221:
+	.size	_Z10timeCalc_1IvEDaPFT_PdmEmRSt14basic_ofstreamIcSt11char_traitsIcEE, .-_Z10timeCalc_1IvEDaPFT_PdmEmRSt14basic_ofstreamIcSt11char_traitsIcEE
+	.section	.text._Z10timeCalc_2IvEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE,"axG",@progbits,_Z10timeCalc_2IvEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE,comdat
+	.p2align 4,,15
+	.weak	_Z10timeCalc_2IvEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE
+	.type	_Z10timeCalc_2IvEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE, @function
+_Z10timeCalc_2IvEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE:
+.LFB3222:
+	.cfi_startproc
+	pushq	%r15
+	.cfi_def_cfa_offset 16
+	.cfi_offset 15, -16
+	pushq	%r14
+	.cfi_def_cfa_offset 24
+	.cfi_offset 14, -24
+	pushq	%r13
+	.cfi_def_cfa_offset 32
+	.cfi_offset 13, -32
+	pushq	%r12
+	.cfi_def_cfa_offset 40
+	.cfi_offset 12, -40
+	pushq	%rbp
+	.cfi_def_cfa_offset 48
+	.cfi_offset 6, -48
+	pushq	%rbx
+	.cfi_def_cfa_offset 56
+	.cfi_offset 3, -56
+	subq	$56, %rsp
+	.cfi_def_cfa_offset 112
+	movq	%fs:40, %rax
+	movq	%rax, 40(%rsp)
+	xorl	%eax, %eax
+	cmpl	$100000000, %esi
+	movq	%rdx, 8(%rsp)
+	jg	.L112
+	movslq	%esi, %rbx
+	movabsq	$1152921504606846975, %rax
+	cmpq	%rax, %rbx
+	ja	.L114
+	leaq	39(%rsp), %rcx
+	movq	%rdi, %r13
+	movl	%esi, %ebp
+	leaq	0(,%rbx,8), %r15
+	movq	%rax, 24(%rsp)
+	movq	%rcx, 16(%rsp)
+	jmp	.L115
+	.p2align 4,,10
+	.p2align 3
+.L118:
+	addq	$10000000, %rbx
+	addq	$80000000, %r15
+	cmpq	24(%rsp), %rbx
+	ja	.L114
+.L115:
+	movq	%r15, %rdi
+	call	_Znam@PLT
+	movq	%rbx, %rsi
+	movq	%rax, %r14
+	movq	%rax, %rdi
+	call	_Z9intRandomPdm
+	call	_ZNSt6chrono3_V212system_clock3nowEv@PLT
+	movq	%rbx, %rdx
+	movq	%rax, %r12
+	movq	%r14, %rsi
+	movq	%r14, %rdi
+	call	*%r13
+	call	_ZNSt6chrono3_V212system_clock3nowEv@PLT
+	pxor	%xmm0, %xmm0
+	subq	%r12, %rax
+	movq	16(%rsp), %rsi
+	movq	8(%rsp), %rdi
+	movl	$1, %edx
+	movb	$10, 39(%rsp)
+	cvtsi2sdq	%rax, %xmm0
+	divsd	.LC4(%rip), %xmm0
+	movsd	%xmm0, (%rsp)
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	movl	%ebp, %esi
+	movq	%rax, %rdi
+	addl	$10000000, %ebp
+	call	_ZNSolsEi@PLT
+	leaq	.LC5(%rip), %rsi
+	movl	$1, %edx
+	movq	%rax, %rdi
+	movq	%rax, %r12
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	movsd	(%rsp), %xmm0
+	movq	%r12, %rdi
+	call	_ZNSo9_M_insertIdEERSoT_@PLT
+	cmpl	$100000000, %ebp
+	jle	.L118
+.L112:
+	movq	40(%rsp), %rax
+	xorq	%fs:40, %rax
+	jne	.L120
+	addq	$56, %rsp
+	.cfi_remember_state
+	.cfi_def_cfa_offset 56
+	popq	%rbx
+	.cfi_def_cfa_offset 48
+	popq	%rbp
+	.cfi_def_cfa_offset 40
+	popq	%r12
+	.cfi_def_cfa_offset 32
+	popq	%r13
+	.cfi_def_cfa_offset 24
+	popq	%r14
+	.cfi_def_cfa_offset 16
+	popq	%r15
+	.cfi_def_cfa_offset 8
+	ret
+.L114:
+	.cfi_restore_state
+	call	__cxa_throw_bad_array_new_length@PLT
+.L120:
+	call	__stack_chk_fail@PLT
+	.cfi_endproc
+.LFE3222:
+	.size	_Z10timeCalc_2IvEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE, .-_Z10timeCalc_2IvEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE
+	.section	.rodata.str1.8,"aMS",@progbits,1
+	.align 8
+.LC6:
+	.string	"Numero nulo ou abaixo/igual a 0"
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC7:
+	.string	"resultados.txt"
+.LC8:
+	.string	"***inner_prod***"
+.LC9:
+	.string	"Size"
+.LC10:
+	.string	"Time"
+.LC11:
+	.string	"***sum_positive***"
+.LC12:
+	.string	"***sqrt_element***"
+.LC13:
+	.string	"***exp_element***"
+.LC14:
+	.string	"***log_element***"
+.LC15:
+	.string	"***gauss***"
+	.section	.text.startup,"ax",@progbits
+	.p2align 4,,15
+	.globl	main
+	.type	main, @function
+main:
+.LFB3210:
+	.cfi_startproc
+	.cfi_personality 0x9b,DW.ref.__gxx_personality_v0
+	.cfi_lsda 0x1b,.LLSDA3210
+	pushq	%r15
+	.cfi_def_cfa_offset 16
+	.cfi_offset 15, -16
+	pushq	%r14
+	.cfi_def_cfa_offset 24
+	.cfi_offset 14, -24
+	pushq	%r13
+	.cfi_def_cfa_offset 32
+	.cfi_offset 13, -32
+	pushq	%r12
+	.cfi_def_cfa_offset 40
+	.cfi_offset 12, -40
+	pushq	%rbp
+	.cfi_def_cfa_offset 48
+	.cfi_offset 6, -48
+	pushq	%rbx
+	.cfi_def_cfa_offset 56
+	.cfi_offset 3, -56
+	subq	$584, %rsp
+	.cfi_def_cfa_offset 640
+	movq	%fs:40, %rax
+	movq	%rax, 568(%rsp)
+	xorl	%eax, %eax
+	cmpq	$0, 8(%rsi)
+	je	.L134
+	leaq	48(%rsp), %rbx
+	movq	%rsi, %rbp
+	movq	%rbx, %rdi
+.LEHB0:
+	call	_ZNSt14basic_ofstreamIcSt11char_traitsIcEEC1Ev@PLT
+.LEHE0:
+	leaq	.LC7(%rip), %rsi
+	movl	$48, %edx
+	movq	%rbx, %rdi
+.LEHB1:
+	call	_ZNSt14basic_ofstreamIcSt11char_traitsIcEE4openEPKcSt13_Ios_Openmode@PLT
+	movq	8(%rbp), %rdi
+	movl	$10, %edx
+	xorl	%esi, %esi
+	call	strtol@PLT
+	leaq	.LC8(%rip), %rsi
+	movl	$16, %edx
+	movq	%rbx, %rdi
+	movq	%rax, %r12
+	movl	%eax, %ebp
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	36(%rsp), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	movb	$10, 36(%rsp)
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC9(%rip), %rsi
+	movl	$4, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC5(%rip), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC10(%rip), %rsi
+	movq	%rbx, %rdi
+	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@PLT
+	movslq	%r12d, %r15
+	leaq	_Z10inner_prodPdS_m(%rip), %rdi
+	movq	%rbx, %rdx
+	movq	%r15, %rsi
+	movq	%r15, 24(%rsp)
+	call	_Z10timeCalc_2IdEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE
+	leaq	37(%rsp), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	movb	$10, 37(%rsp)
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC11(%rip), %rsi
+	movl	$18, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	38(%rsp), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	movb	$10, 38(%rsp)
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC9(%rip), %rsi
+	movl	$4, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC5(%rip), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC10(%rip), %rsi
+	movq	%rbx, %rdi
+	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@PLT
+	cmpl	$100000000, %r12d
+	jg	.L124
+	movabsq	$1152921504606846975, %rax
+	movq	%r15, %r12
+	cmpq	%rax, %r15
+	ja	.L125
+	leaq	47(%rsp), %rcx
+	leaq	0(,%r15,8), %r14
+	movq	%rax, 16(%rsp)
+	leaq	.LC5(%rip), %r15
+	movq	%rcx, 8(%rsp)
+	jmp	.L126
+	.p2align 4,,10
+	.p2align 3
+.L131:
+	addq	$10000000, %r12
+	addq	$80000000, %r14
+	cmpq	16(%rsp), %r12
+	ja	.L125
+.L126:
+	movq	%r14, %rdi
+	call	_Znam@PLT
+	movq	%r12, %rsi
+	movq	%rax, %rdi
+	call	_Z9intRandomPdm
+	call	_ZNSt6chrono3_V212system_clock3nowEv@PLT
+	movq	%rax, %r13
+	call	_ZNSt6chrono3_V212system_clock3nowEv@PLT
+	pxor	%xmm0, %xmm0
+	subq	%r13, %rax
+	movq	8(%rsp), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	movb	$10, 47(%rsp)
+	cvtsi2sdq	%rax, %xmm0
+	divsd	.LC4(%rip), %xmm0
+	movsd	%xmm0, (%rsp)
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	movl	%ebp, %esi
+	movq	%rax, %rdi
+	call	_ZNSolsEi@PLT
+	movl	$1, %edx
+	movq	%r15, %rsi
+	movq	%rax, %rdi
+	movq	%rax, %r13
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	movsd	(%rsp), %xmm0
+	movq	%r13, %rdi
+	call	_ZNSo9_M_insertIdEERSoT_@PLT
+	addl	$10000000, %ebp
+	cmpl	$100000000, %ebp
+	jle	.L131
+.L124:
+	leaq	39(%rsp), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	movb	$10, 39(%rsp)
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC12(%rip), %rsi
+	movl	$18, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	40(%rsp), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	movb	$10, 40(%rsp)
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC9(%rip), %rsi
+	movl	$4, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC5(%rip), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC10(%rip), %rsi
+	movq	%rbx, %rdi
+	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@PLT
+	movq	24(%rsp), %r14
+	leaq	_Z12sqrt_elementPdm(%rip), %rdi
+	movq	%rbx, %rdx
+	movq	%r14, %rsi
+	call	_Z10timeCalc_1IvEDaPFT_PdmEmRSt14basic_ofstreamIcSt11char_traitsIcEE
+	leaq	41(%rsp), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	movb	$10, 41(%rsp)
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC13(%rip), %rsi
+	movl	$17, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	42(%rsp), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	movb	$10, 42(%rsp)
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC9(%rip), %rsi
+	movl	$4, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC5(%rip), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC10(%rip), %rsi
+	movq	%rbx, %rdi
+	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@PLT
+	leaq	_Z11exp_elementPdm(%rip), %rdi
+	movq	%rbx, %rdx
+	movq	%r14, %rsi
+	call	_Z10timeCalc_1IvEDaPFT_PdmEmRSt14basic_ofstreamIcSt11char_traitsIcEE
+	leaq	43(%rsp), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	movb	$10, 43(%rsp)
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC14(%rip), %rsi
+	movl	$17, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	44(%rsp), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	movb	$10, 44(%rsp)
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC9(%rip), %rsi
+	movl	$4, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC5(%rip), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC10(%rip), %rsi
+	movq	%rbx, %rdi
+	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@PLT
+	leaq	_Z11log_elementPdm(%rip), %rdi
+	movq	%rbx, %rdx
+	movq	%r14, %rsi
+	call	_Z10timeCalc_1IvEDaPFT_PdmEmRSt14basic_ofstreamIcSt11char_traitsIcEE
+	leaq	45(%rsp), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	movb	$10, 45(%rsp)
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC15(%rip), %rsi
+	movl	$11, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	46(%rsp), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	movb	$10, 46(%rsp)
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC9(%rip), %rsi
+	movl	$4, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC5(%rip), %rsi
+	movl	$1, %edx
+	movq	%rbx, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	.LC10(%rip), %rsi
+	movq	%rbx, %rdi
+	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@PLT
+	leaq	_Z5gaussPdS_m(%rip), %rdi
+	movq	%rbx, %rdx
+	movq	%r14, %rsi
+	call	_Z10timeCalc_2IvEDaPFT_PdS1_mEmRSt14basic_ofstreamIcSt11char_traitsIcEE
+	movq	%rbx, %rdi
+	call	_ZNSt14basic_ofstreamIcSt11char_traitsIcEE5closeEv@PLT
+.LEHE1:
+	movq	%rbx, %rdi
+	call	_ZNSt14basic_ofstreamIcSt11char_traitsIcEED1Ev@PLT
+.L123:
+	xorl	%eax, %eax
+	movq	568(%rsp), %rcx
+	xorq	%fs:40, %rcx
+	jne	.L135
+	addq	$584, %rsp
+	.cfi_remember_state
+	.cfi_def_cfa_offset 56
+	popq	%rbx
+	.cfi_def_cfa_offset 48
+	popq	%rbp
+	.cfi_def_cfa_offset 40
+	popq	%r12
+	.cfi_def_cfa_offset 32
+	popq	%r13
+	.cfi_def_cfa_offset 24
+	popq	%r14
+	.cfi_def_cfa_offset 16
+	popq	%r15
+	.cfi_def_cfa_offset 8
+	ret
+.L134:
+	.cfi_restore_state
+	leaq	.LC6(%rip), %rdi
+.LEHB2:
+	call	puts@PLT
+.LEHE2:
+	jmp	.L123
+.L125:
+.LEHB3:
+	call	__cxa_throw_bad_array_new_length@PLT
+.LEHE3:
+.L130:
+	movq	%rax, %rbp
+	movq	%rbx, %rdi
+	call	_ZNSt14basic_ofstreamIcSt11char_traitsIcEED1Ev@PLT
+	movq	%rbp, %rdi
+.LEHB4:
+	call	_Unwind_Resume@PLT
+.LEHE4:
+.L135:
+	call	__stack_chk_fail@PLT
+	.cfi_endproc
+.LFE3210:
+	.globl	__gxx_personality_v0
+	.section	.gcc_except_table,"a",@progbits
+.LLSDA3210:
+	.byte	0xff
+	.byte	0xff
+	.byte	0x1
+	.uleb128 .LLSDACSE3210-.LLSDACSB3210
+.LLSDACSB3210:
+	.uleb128 .LEHB0-.LFB3210
+	.uleb128 .LEHE0-.LEHB0
+	.uleb128 0
+	.uleb128 0
+	.uleb128 .LEHB1-.LFB3210
+	.uleb128 .LEHE1-.LEHB1
+	.uleb128 .L130-.LFB3210
+	.uleb128 0
+	.uleb128 .LEHB2-.LFB3210
+	.uleb128 .LEHE2-.LEHB2
+	.uleb128 0
+	.uleb128 0
+	.uleb128 .LEHB3-.LFB3210
+	.uleb128 .LEHE3-.LEHB3
+	.uleb128 .L130-.LFB3210
+	.uleb128 0
+	.uleb128 .LEHB4-.LFB3210
+	.uleb128 .LEHE4-.LEHB4
+	.uleb128 0
+	.uleb128 0
+.LLSDACSE3210:
+	.section	.text.startup
+	.size	main, .-main
+	.p2align 4,,15
+	.type	_GLOBAL__sub_I__Z10inner_prodPdS_m, @function
+_GLOBAL__sub_I__Z10inner_prodPdS_m:
+.LFB3819:
+	.cfi_startproc
+	leaq	_ZStL8__ioinit(%rip), %rdi
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 16
+	call	_ZNSt8ios_base4InitC1Ev@PLT
+	movq	_ZNSt8ios_base4InitD1Ev@GOTPCREL(%rip), %rdi
+	leaq	__dso_handle(%rip), %rdx
+	leaq	_ZStL8__ioinit(%rip), %rsi
+	addq	$8, %rsp
+	.cfi_def_cfa_offset 8
+	jmp	__cxa_atexit@PLT
+	.cfi_endproc
+.LFE3819:
+	.size	_GLOBAL__sub_I__Z10inner_prodPdS_m, .-_GLOBAL__sub_I__Z10inner_prodPdS_m
+	.section	.init_array,"aw"
+	.align 8
+	.quad	_GLOBAL__sub_I__Z10inner_prodPdS_m
+	.local	_ZStL8__ioinit
+	.comm	_ZStL8__ioinit,1,1
+	.section	.rodata.cst16,"aM",@progbits,16
+	.align 16
+.LC1:
+	.long	0
+	.long	-2147483648
+	.long	0
+	.long	0
+	.section	.rodata.cst8,"aM",@progbits,8
+	.align 8
+.LC2:
+	.long	0
+	.long	1071644672
+	.align 8
+.LC3:
+	.long	869545553
+	.long	1071220805
+	.align 8
+.LC4:
+	.long	0
+	.long	1104006501
+	.hidden	DW.ref.__gxx_personality_v0
+	.weak	DW.ref.__gxx_personality_v0
+	.section	.data.DW.ref.__gxx_personality_v0,"awG",@progbits,DW.ref.__gxx_personality_v0,comdat
+	.align 8
+	.type	DW.ref.__gxx_personality_v0, @object
+	.size	DW.ref.__gxx_personality_v0, 8
+DW.ref.__gxx_personality_v0:
+	.quad	__gxx_personality_v0
+	.hidden	__dso_handle
+	.ident	"GCC: (Ubuntu 7.3.0-16ubuntu3) 7.3.0"
+	.section	.note.GNU-stack,"",@progbits

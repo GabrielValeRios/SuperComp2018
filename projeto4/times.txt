@@ -1,0 +1,112 @@
+GPU: 
+    
+	PARA IMAGEM BOLAS:
+	(f_G = 1, b_g = 1)
+
+	buildVecTime: 0.0942437
+	SSSP TIME: 1042.48
+	buildImageTime: 0.0181878
+	TotalTime: 5.75837
+
+	(f_G = 2, b_g = 1)
+
+	buildVecTime: 0.0953369
+	SSSP TIME: 1035.12
+	buildImageTime: 0.0182181
+	TotalTime: 7.99746
+
+	(f_g = 2, b_g = 2)
+
+	buildVecTime: 0.0962499
+	SSSP TIME: 1016.27
+	buildImageTime: 0.0182177
+	TotalTime: 8.42793
+
+	(f_g = 3, b_g = 3)
+
+	buildVecTime: 0.100324
+	SSSP TIME: 1030.49
+	buildImageTime: 0.0183184
+	TotalTime: 8.26048
+
+	PARA IMAGEM SKI:
+
+	(f_G = 1, b_g = 1)
+
+	buildVecTime: 0.346707
+	SSSP TIME: 4701.37
+	buildImageTime: 0.0704747
+	TotalTime: 7.96447
+
+	(f_G = 2, b_g = 1)
+
+	buildVecTime: 0.355764
+	SSSP TIME: 4713.41
+	buildImageTime: 0.0724054
+	TotalTime: 10.3593
+
+	(f_g = 2, b_g = 2)
+
+	buildVecTime: 0.363202
+	SSSP TIME: 4445.42
+	buildImageTime: 0.0726226
+	TotalTime: 14.3782
+
+	(f_g = 3, b_g = 3)
+
+	buildVecTime: 0.376253
+	SSSP TIME: 4710.69
+	buildImageTime: 0.0723796
+	TotalTime: 13.1684
+
+SEQ:
+   	PARA IMAGEM BOLAS:
+	(f_G = 1, b_g = 1)
+
+	SSSP TIME: 0.550546
+	BuildImage Time: 0.0294215
+	totalTime: 5.52622
+
+	(f_G = 2, b_g = 1):
+
+	SSSP TIME: 0.562163
+	BuildImage Time: 0.0260449
+	totalTime: 5.67982
+
+	(f_g = 2, b_g = 2)
+
+	SSSP TIME: 0.548819
+	BuildImage Time: 0.0381865
+	totalTime: 8.63064
+
+	(f_g = 3, b_g = 3)
+
+	SSSP TIME: 0.55274
+	BuildImage Time: 0.0236442
+	totalTime: 8.48313
+
+	PARA IMAGEM SKI:
+
+	(f_G = 1, b_g = 1)
+
+	SSSP TIME: 2.25085
+	BuildImage Time: 0.100811
+	totalTime: 7.00957
+
+	(f_G = 2, b_g = 1)
+
+	SSSP TIME: 2.30551
+	BuildImage Time: 0.147569
+	totalTime: 7.92726
+
+	(f_g = 2, b_g = 2)
+
+	SSSP TIME: 2.27655
+	BuildImage Time: 0.0930111
+	totalTime: 8.97046
+
+	(f_g = 3, b_g = 3)
+
+	SSSP TIME: 2.2869
+	BuildImage Time: 0.105954
+	totalTime: 13.7796
