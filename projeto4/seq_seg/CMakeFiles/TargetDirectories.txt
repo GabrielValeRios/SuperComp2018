@@ -1,7 +1,0 @@
-/home/ubuntu/superComp2018/projeto4/seq_seg/CMakeFiles/install.dir
-/home/ubuntu/superComp2018/projeto4/seq_seg/CMakeFiles/list_install_components.dir
-/home/ubuntu/superComp2018/projeto4/seq_seg/CMakeFiles/rebuild_cache.dir
-/home/ubuntu/superComp2018/projeto4/seq_seg/CMakeFiles/segmentacao_sequencial.dir
-/home/ubuntu/superComp2018/projeto4/seq_seg/CMakeFiles/edit_cache.dir
-/home/ubuntu/superComp2018/projeto4/seq_seg/CMakeFiles/install/strip.dir
-/home/ubuntu/superComp2018/projeto4/seq_seg/CMakeFiles/install/local.dir
